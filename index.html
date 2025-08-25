@@ -7,24 +7,23 @@
     body {
       margin: 0;
       padding: 0;
+      background: linear-gradient(to bottom, #fffafa, #fce4ec);
       font-family: 'Georgia', serif;
       color: #333;
       overflow-x: hidden;
       position: relative;
-      background: url('https://cdn.pixabay.com/photo/2016/11/29/03/56/japan-1869747_960_720.jpg') no-repeat center center fixed;
-      background-size: cover;
     }
 
     .container {
       max-width: 700px;
       margin: 60px auto;
-      background: rgba(255, 255, 255, 0.85);
+      background: #fff;
       padding: 40px;
       border-radius: 16px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
       border: 2px solid #f8d7da;
       position: relative;
-      z-index: 2;
+      z-index: 3;
     }
 
     h1 {
@@ -40,28 +39,67 @@
       font-size: 1.05rem;
     }
 
+    /* Japanese Flag */
+    .flag {
+      width: 180px;
+      height: 120px;
+      background: #ffffff;
+      border: 1px solid #ccc;
+      margin: 0 auto 20px auto;
+      position: relative;
+      border-radius: 4px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      overflow: hidden;
+      animation: wave 3s ease-in-out infinite;
+      z-index: 5; /* ensure flag is above background petals */
+    }
+
+    .circle {
+      width: 60px;
+      height: 60px;
+      background: #bc002d;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: inset -2px -2px 6px rgba(0,0,0,0.2);
+    }
+
+    @keyframes wave {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(1deg); }
+    }
+
+    /* Sakura petals */
     .petal {
       position: fixed;
-      top: -10px;
+      top: -20px;
       background: pink;
       border-radius: 50%;
-      opacity: 0.8;
       pointer-events: none;
-      z-index: 1;
       animation: fall linear forwards;
     }
 
+    .petal-background { z-index: 1; opacity: 0.6; }
+    .petal-foreground { z-index: 4; opacity: 0.8; }
+
     @keyframes fall {
-      to {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0.3;
-      }
+      0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 1; }
+      25% { transform: translateY(25vh) rotate(45deg) translateX(10px); }
+      50% { transform: translateY(50vh) rotate(90deg) translateX(-10px); opacity: 0.8; }
+      75% { transform: translateY(75vh) rotate(135deg) translateX(10px); }
+      100% { transform: translateY(110vh) rotate(180deg) translateX(0); opacity: 0.3; }
     }
   </style>
 </head>
 <body>
 
   <div class="container">
+    <div class="flag">
+      <div class="circle"></div>
+    </div>
+
     <h1> My Gold Rush </h1>
 
     <p>You’re golden and unreachable,
@@ -111,23 +149,28 @@
   </div>
 
   <script>
-    function createPetal() {
+    function createPetal(foreground=false) {
       const petal = document.createElement("div");
       petal.classList.add("petal");
+      petal.classList.add(foreground ? "petal-foreground" : "petal-background");
       document.body.appendChild(petal);
 
-      const size = Math.random() * 10 + 8;
+      const size = Math.random() * 12 + 6;
       petal.style.width = size + "px";
-      petal.style.height = size * 0.8 + "px";
+      petal.style.height = size * 0.7 + "px";
       petal.style.left = Math.random() * window.innerWidth + "px";
       petal.style.animationDuration = (Math.random() * 5 + 5) + "s";
+      petal.style.opacity = Math.random() * 0.5 + (foreground ? 0.5 : 0.3);
 
       setTimeout(() => {
         petal.remove();
-      }, 10000);
+      }, 12000);
     }
 
-    setInterval(createPetal, 400);
+    // More background petals
+    setInterval(() => createPetal(false), 200);
+    // Some foreground petals to float over the flag
+    setInterval(() => createPetal(true), 600);
   </script>
 </body>
 </html>
