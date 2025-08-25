@@ -1,103 +1,228 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
   <title>Confession to Kenji from Japan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      padding: 2rem;
+      padding: 0;
+      font-family: 'Sawarabi Mincho', serif;
+      background: linear-gradient(to bottom, #fff8f2, #ffeef5);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Sakura Petals */
+    .petal {
+      position: fixed;
+      top: -10%;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Cherry_blossom_icon.svg/1024px-Cherry_blossom_icon.svg.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 25px;
+      height: 25px;
+      opacity: 0.8;
+      animation: fall linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-10%) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Envelope */
+    .envelope-container {
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #f6f7fb;
-      font-family: Georgia, "Times New Roman", serif;
-      color: #1f2937;
+      height: 100vh;
+      cursor: pointer;
+      flex-direction: column;
+      z-index: 3;
     }
-    .card {
+
+    .envelope {
+      width: 180px;
+      height: 120px;
       background: #fff;
-      padding: 2.5rem;
-      border-radius: 20px;
-      max-width: 700px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.1);
-      line-height: 1.7;
+      border: 2px solid #d43f3f;
       position: relative;
-      white-space: pre-wrap;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
-    h1 {
-      margin-top: 0;
-      font-size: 1.8rem;
-      color: #eab308;
+
+    .envelope::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom right, transparent 50%, #d43f3f 50%);
+      clip-path: polygon(0 0, 100% 0, 50% 50%);
     }
+
     .flag {
       position: absolute;
-      top: -15px;
-      right: -15px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 45px;
+      height: 45px;
       background: white;
-      border: 2px solid #e5e7eb;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      border: 1px solid #d43f3f;
+      border-radius: 4px;
       display: flex;
       justify-content: center;
       align-items: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,.1);
     }
-    .flag-circle {
-      background: #dc2626;
+
+    .flag::before {
+      content: "";
+      width: 25px;
+      height: 25px;
+      background: #d43f3f;
       border-radius: 50%;
-      width: 20px;
-      height: 20px;
     }
-    footer {
-      margin-top: 2rem;
+
+    .open-text {
+      margin-top: 15px;
+      font-size: 1em;
+      color: #d43f3f;
+      font-weight: bold;
+    }
+
+    /* Letter */
+    .card {
+      max-width: 650px;
+      margin: 80px auto;
+      background: #fffdfa;
+      padding: 40px;
+      border-radius: 18px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      position: relative;
+      z-index: 2;
+      animation: fadeIn 2s ease-out;
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
       text-align: center;
-      font-size: 0.9rem;
-      color: #6b7280;
+      font-size: 2em;
+      color: #d43f3f;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.1em;
+      line-height: 1.8;
+      color: #444;
+      text-align: justify;
+      white-space: pre-line; /* keeps your line breaks */
+    }
+
+    .ribbon {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #ffd700, #f5c518);
+      color: white;
+      padding: 6px 14px;
+      font-size: 0.9em;
+      font-weight: bold;
+      border-radius: 6px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="flag">
-      <div class="flag-circle"></div>
+
+  <!-- Sakura -->
+  <div class="petal"></div>
+
+  <!-- Envelope -->
+  <div class="envelope-container" id="envelopeScreen">
+    <div class="envelope">
+      <div class="flag"></div>
     </div>
-    <h1> To Kenji from Japan</h1>
-
-    You’re golden and unreachable,  
-    like sunlight poured into skin,  
-    the kind of presence  
-    that makes a room lean closer.  
-    Everyone wants their turn in your orbit—  
-    I can’t blame them.  
-
-    I like how you’re open,  
-    how you cling like you mean it,  
-    how sweetness trails behind your every move.  
-    I like how you never give up,  
-    how your mind is always building forward.  
-    You carry everything  
-    I wish I had in myself.  
-
-    But what pulls me most  
-    isn’t only your glow—  
-    it’s the shadows you don’t hide.  
-    The flaws that match mine,  
-    the dark corners we both carry.  
-    It makes you real,  
-    makes me respect you deeper  
-    than any dream could.  
-
-    So here’s the truth:  
-    I think of you the way I think of stars—  
-    distant, admired,  
-    a little impossible.  
-    Yet even with seas between us,  
-    I’d still look up,  
-    and choose you every time.  
-
-    <footer>From the Philippines 🌊🇵🇭</footer>
+    <div class="open-text">Click to Open</div>
   </div>
+
+  <!-- Letter -->
+  <div class="card" id="letterCard">
+    <div class="ribbon">Confession Letter</div>
+    <h1>Confession to Kenji from Japan</h1>
+    <p>
+
+
+
+You’re golden and unreachable.  
+Everyone wants you and  
+But I like more than your glow.  
+I like how open you are,  
+how you cling without apology,  
+how sweetness lives in your smallest gestures.  
+I like how you never give up,  
+how your mind is always building forward.  
+You carry qualities  
+I’ve always wished for in myself.  
+
+But what pulls me most  
+isn’t only your glow—  
+it’s the shadows you don’t hide.  
+The flaws that match mine,  
+the dark corners we both carry.  
+It makes you real,  
+makes me respect you deeper  
+than any dream could.  
+
+I think of you the way I think of stars—  
+from a distant, admired,  
+a little impossible to be with.  
+Yet even with seas between us,  
+I’d still look up, as a soul I already understand—  
+light and darkness both.  
+
+Thank you for crossing paths with me.  
+Even if our time was brief, it will remain in my heart like cherry blossoms—  
+beautiful, fleeting, and unforgettable.  
+I hope you find the love you deserve.
+    </p>
+  </div>
+
+  <script>
+    // Sakura petals
+    function createPetal() {
+      const petal = document.createElement("div");
+      petal.classList.add("petal");
+      petal.style.left = Math.random() * 100 + "vw";
+      petal.style.animationDuration = 5 + Math.random() * 5 + "s";
+      petal.style.opacity = Math.random();
+      petal.style.transform = `rotate(${Math.random() * 360}deg)`;
+      document.body.appendChild(petal);
+      setTimeout(() => petal.remove(), 10000);
+    }
+    setInterval(createPetal, 500);
+
+    // Open letter
+    const envelopeScreen = document.getElementById("envelopeScreen");
+    const letterCard = document.getElementById("letterCard");
+
+    envelopeScreen.addEventListener("click", () => {
+      envelopeScreen.style.display = "none";
+      letterCard.style.display = "block";
+    });
+  </script>
+
 </body>
 </html>
+
+
