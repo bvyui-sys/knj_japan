@@ -165,8 +165,8 @@
 
 
 You’re golden and unreachable.  
-Everyone wants you and  
-But I like more than your glow.  
+Everyone wants you.
+I like more than your glow.  
 I like how open you are,  
 how you cling without apology,  
 how sweetness lives in your smallest gestures.  
@@ -180,9 +180,7 @@ isn’t only your glow—
 it’s the shadows you don’t hide.  
 The flaws that match mine,  
 the dark corners we both carry.  
-It makes you real,  
-makes me respect you deeper  
-than any dream could.  
+It makes you real.  
 
 I think of you the way I think of stars—  
 from a distant, admired,  
@@ -192,9 +190,13 @@ I’d still look up, as a soul I already understand—
 light and darkness both.  
 
 Thank you for crossing paths with me.  
-Even if our time was brief, it will remain in my heart like cherry blossoms—  
+Even if our time was brief, 
+it will remain in my heart like cherry blossoms—  
 beautiful, fleeting, and unforgettable.  
 I hope you find the love you deserve.
+
+ps. don't feel bad for ghosting me. as what she said:
+"i don't like that falling feels like flying 'til the bone crush."
     </p>
   </div>
 
@@ -221,8 +223,40 @@ I hope you find the love you deserve.
       letterCard.style.display = "block";
     });
   </script>
+<script>
+  // Sakura petals animation
+  document.addEventListener("DOMContentLoaded", () => {
+    const numPetals = 25;
+    for (let i = 0; i < numPetals; i++) {
+      let petal = document.createElement("div");
+      petal.innerHTML = "🌸";
+      petal.style.position = "fixed";
+      petal.style.left = Math.random() * 100 + "vw";
+      petal.style.top = -10 + "px";
+      petal.style.fontSize = Math.random() * 20 + 15 + "px";
+      petal.style.opacity = Math.random();
+      petal.style.animation = `fall ${Math.random() * 5 + 5}s linear infinite`;
+      document.body.appendChild(petal);
+    }
+  });
+
+
+  const style = document.createElement("style");
+  style.innerHTML = `
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+      }
+    }
+    body div {
+      pointer-events: none;
+    }
+  `;
+  document.head.appendChild(style);
+</script>
 
 </body>
 </html>
+
 
 
