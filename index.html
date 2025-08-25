@@ -7,20 +7,23 @@
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(to bottom, #fffafa, #fce4ec);
       font-family: 'Georgia', serif;
       color: #333;
       overflow-x: hidden;
       position: relative;
+
+      /* Background image of a Japan shrine */
+      background: url('https://images.unsplash.com/photo-1582391671100-28fca203d2cd?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
     }
 
     .container {
       max-width: 700px;
       margin: 60px auto;
-      background: #fff;
+      background: rgba(255, 255, 255, 0.85); /* semi-transparent */
       padding: 40px;
       border-radius: 16px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
       border: 2px solid #f8d7da;
       position: relative;
       z-index: 2;
@@ -39,32 +42,35 @@
       font-size: 1.05rem;
     }
 
-    /* Japanese Flag (CSS) */
+    /* Japanese Flag (realistic) */
     .flag {
-      width: 120px;
-      height: 80px;
-      background: white;
+      width: 180px;
+      height: 120px;
+      background: #ffffff;
       border: 1px solid #ccc;
-      position: relative;
       margin: 0 auto 20px auto;
-      cursor: pointer;
-      transition: transform 0.2s;
+      position: relative;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      overflow: hidden;
+      animation: wave 3s ease-in-out infinite;
     }
 
-    .flag:hover {
-      transform: scale(1.05);
-    }
-
-    .flag::after {
-      content: "";
-      width: 40px;
-      height: 40px;
+    .circle {
+      width: 60px;
+      height: 60px;
       background: #bc002d;
       border-radius: 50%;
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      box-shadow: inset -2px -2px 6px rgba(0,0,0,0.2);
+    }
+
+    @keyframes wave {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(1deg); }
     }
 
     /* Sakura petals */
@@ -90,9 +96,10 @@
 <body>
 
   <div class="container">
-    <a href="https://en.wikipedia.org/wiki/Flag_of_Japan" target="_blank">
-      <div class="flag"></div>
-    </a>
+    <!-- Japanese Flag -->
+    <div class="flag">
+      <div class="circle"></div>
+    </div>
 
     <h1> My Gold Rush </h1>
 
@@ -113,14 +120,10 @@
     it’s the shadows you don’t hide.  
     The flaws that match mine,  
     the dark corners we both carry.  
-    Even in the dark,
-    you’re still a masterpiece I can’t unsee.</p>
-
-    <p>I think of you the way I think of stars—
+    I think of you the way I think of stars—
     distant, unreachable, yet always in my sky.
     Even with oceans keeping us apart,
-    your light still reaches me,
-    soft but unstoppable, like fate itself.
+    your presence still reaches me.
     And in that glow, I see all of you—
     the light, the shadows, the scars—
     and I love it all, because even in darkness,  
@@ -133,7 +136,7 @@
     And somehow, even in a spark, you make me hope for what’s to come.
     </p>
 
-  <p>
+    <p>
     ps. please don't feel bad for ghosting me. you probably don't even know me but that's fine. 
     i only followed you here on IG to wait for the chance to greet you a happy birthday. 
     i assumed it’s today, but I’m not even sure.
@@ -143,11 +146,10 @@
     maybe someday, if you come to the Philippines, you’ll find the right one—naturally, without even searching.
     I hope you find the love you truly deserve.
     and I hope that, in time, I can grow into the same courage and beauty I see in you.
-  </p>
+    </p>
   </div>
 
   <script>
-    
     function createPetal() {
       const petal = document.createElement("div");
       petal.classList.add("petal");
@@ -168,4 +170,3 @@
   </script>
 </body>
 </html>
-
