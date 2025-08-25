@@ -12,8 +12,8 @@
       overflow-x: hidden;
       position: relative;
 
-      /* Background image of a Japan shrine */
-      background: url('https://images.unsplash.com/photo-1582391671100-28fca203d2cd?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      /* Background image of a Japanese shrine */
+      background: url('https://cdn.pixabay.com/photo/2016/11/29/03/56/japan-1869747_960_720.jpg') no-repeat center center fixed;
       background-size: cover;
     }
 
@@ -42,37 +42,6 @@
       font-size: 1.05rem;
     }
 
-    /* Japanese Flag (realistic) */
-    .flag {
-      width: 180px;
-      height: 120px;
-      background: #ffffff;
-      border: 1px solid #ccc;
-      margin: 0 auto 20px auto;
-      position: relative;
-      border-radius: 4px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      overflow: hidden;
-      animation: wave 3s ease-in-out infinite;
-    }
-
-    .circle {
-      width: 60px;
-      height: 60px;
-      background: #bc002d;
-      border-radius: 50%;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      box-shadow: inset -2px -2px 6px rgba(0,0,0,0.2);
-    }
-
-    @keyframes wave {
-      0%, 100% { transform: rotate(0deg); }
-      50% { transform: rotate(1deg); }
-    }
-
     /* Sakura petals */
     .petal {
       position: fixed;
@@ -96,11 +65,6 @@
 <body>
 
   <div class="container">
-    <!-- Japanese Flag -->
-    <div class="flag">
-      <div class="circle"></div>
-    </div>
-
     <h1> My Gold Rush </h1>
 
     <p>You’re golden and unreachable,
