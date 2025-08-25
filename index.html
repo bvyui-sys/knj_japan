@@ -7,68 +7,78 @@
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(to bottom, #fffafa, #fce4ec);
       font-family: 'Georgia', serif;
-      color: #333;
+      background: linear-gradient(to bottom, #fff0f5, #ffe4e1);
       overflow-x: hidden;
       position: relative;
     }
 
-    .container {
-      max-width: 700px;
-      margin: 60px auto;
-      background: #fff;
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-      border: 2px solid #f8d7da;
+    /* Envelope container */
+    .envelope-container {
       position: relative;
-      z-index: 3;
+      width: 400px;
+      max-width: 90%;
+      margin: 150px auto;
+      cursor: pointer;
+      perspective: 1000px;
     }
 
-    h1 {
+    .envelope {
+      width: 100%;
+      height: 250px;
+      background: #fdf0e8;
+      border: 2px solid #d4a5a5;
+      border-radius: 8px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 1s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+
+    /* Envelope flap */
+    .flap {
+      position: absolute;
+      width: 100%;
+      height: 50%;
+      background: #f8c8c8;
+      top: 0;
+      left: 0;
+      transform-origin: top center;
+      border-bottom: 2px solid #d4a5a5;
+      z-index: 2;
+      transition: transform 1s ease;
+    }
+
+    /* Letter inside */
+    .letter {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #fffdf7;
+      padding: 40px;
+      border-radius: 8px;
+      opacity: 0;
+      z-index: 1;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      overflow-y: auto;
+      transition: opacity 0.8s ease;
+    }
+
+    .letter h1 {
       text-align: center;
       font-size: 2rem;
       color: #bc002d;
       margin-bottom: 20px;
     }
 
-    p {
+    .letter p {
       line-height: 1.8;
       margin: 12px 0;
       font-size: 1.05rem;
-    }
-
-    /* Japanese Flag */
-    .flag {
-      width: 180px;
-      height: 120px;
-      background: #ffffff;
-      border: 1px solid #ccc;
-      margin: 0 auto 20px auto;
-      position: relative;
-      border-radius: 4px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      overflow: hidden;
-      animation: wave 3s ease-in-out infinite;
-      z-index: 5; /* ensure flag is above background petals */
-    }
-
-    .circle {
-      width: 60px;
-      height: 60px;
-      background: #bc002d;
-      border-radius: 50%;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      box-shadow: inset -2px -2px 6px rgba(0,0,0,0.2);
-    }
-
-    @keyframes wave {
-      0%, 100% { transform: rotate(0deg); }
-      50% { transform: rotate(1deg); }
+      color: #333;
     }
 
     /* Sakura petals */
@@ -81,8 +91,8 @@
       animation: fall linear forwards;
     }
 
-    .petal-background { z-index: 1; opacity: 0.6; }
-    .petal-foreground { z-index: 4; opacity: 0.8; }
+    .petal-background { z-index: 0; opacity: 0.6; }
+    .petal-foreground { z-index: 3; opacity: 0.8; }
 
     @keyframes fall {
       0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 1; }
@@ -95,57 +105,58 @@
 </head>
 <body>
 
-  <div class="container">
-    <div class="flag">
-      <div class="circle"></div>
+  <div class="envelope-container" onclick="openEnvelope()">
+    <div class="envelope">
+      <div class="flap"></div>
+      <div class="letter">
+        <h1> My Gold Rush </h1>
+
+        <p>You’re golden and unreachable,
+          everyone wants you — I can’t blame them.
+          A gold rush, the kind that steals the air,
+          yet I’m left wishing I could hold it.</p>
+
+        <p>I like how open you are,  
+        how you cling without apology,  
+        how sweetness lives in your smallest gestures.  
+        I like how you never give up,  
+        how your mind is always building forward.  
+        You carry qualities I’ve always wished for in myself.</p>
+
+        <p>But what pulls me most  
+        isn’t only your glow—  
+        it’s the shadows you don’t hide.  
+        The flaws that match mine,  
+        the dark corners we both carry.  
+        I think of you the way I think of stars—  
+        distant, unreachable, yet always in my sky.
+        Even with oceans keeping us apart,
+        your presence still reaches me.
+        And in that glow, I see all of you—  
+        the light, the shadows, the scars—  
+        and I love it all, because even in darkness,  
+        you’re still a masterpiece I can’t unsee.</p>
+
+        <p>Thank you for crossing paths with me.
+        Even if our time was brief, you’ve been living rent-free in my mind.
+        I still remember your comfort, your laugh, the way your mind works—so beautifully.
+        It’s crazy how a stranger can leave a mark this deep.
+        And somehow, even in a spark, you make me hope for what’s to come.
+        </p>
+
+        <p>
+        ps. please don't feel bad for ghosting me. you probably don't even know me but that's fine. 
+        i only followed you here on IG to wait for the chance to greet you a happy birthday. 
+        i assumed it’s today, but I’m not even sure.
+        this will be the last time I reach out.
+        you’re a gold rush, you know? in the Taylor Swift–coded sense.
+        and I’ve realized I don't like that falling feels like flying 'til the bone crush.
+        maybe someday, if you come to the Philippines, you’ll find the right one—naturally, without even searching.
+        I hope you find the love you truly deserve.
+        and I hope that, in time, I can grow into the same courage and beauty I see in you.
+        </p>
+      </div>
     </div>
-
-    <h1> My Gold Rush </h1>
-
-    <p>You’re golden and unreachable,
-      everyone wants you — I can’t blame them.
-      A gold rush, the kind that steals the air,
-      yet I’m left wishing I could hold it.</p>
-
-    <p>I like how open you are,  
-    how you cling without apology,  
-    how sweetness lives in your smallest gestures.  
-    I like how you never give up,  
-    how your mind is always building forward.  
-    You carry qualities I’ve always wished for in myself.</p>
-
-    <p>But what pulls me most  
-    isn’t only your glow—  
-    it’s the shadows you don’t hide.  
-    The flaws that match mine,  
-    the dark corners we both carry.  
-    I think of you the way I think of stars—
-    distant, unreachable, yet always in my sky.
-    Even with oceans keeping us apart,
-    your presence still reaches me.
-    And in that glow, I see all of you—
-    the light, the shadows, the scars—
-    and I love it all, because even in darkness,  
-    you’re still a masterpiece I can’t unsee.</p>
-
-    <p>Thank you for crossing paths with me.
-    Even if our time was brief, you’ve been living rent-free in my mind.
-    I still remember your comfort, your laugh, the way your mind works—so beautifully.
-    It’s crazy how a stranger can leave a mark this deep.
-    And somehow, even in a spark, you make me hope for what’s to come.
-    </p>
-
-    <p>
-    ps. please don't feel bad for ghosting me. you probably don't even know me but that's fine. 
-    i only followed you here on IG to wait for the chance to greet you a happy birthday. 
-    i assumed it’s today, but I’m not even sure.
-    this will be the last time I reach out.
-    you’re a gold rush, you know? in the Taylor Swift–coded sense.
-    and I’ve realized I don't like that falling feels like flying 'til the bone crush.
-    maybe someday, if you come to the Philippines, you’ll find the right one—naturally, without even searching.
-    I hope you find the love you truly deserve.
-    and I hope that, in time, I can grow into the same courage and beauty I see in you.
-    </p>
   </div>
 
   <script>
@@ -169,8 +180,15 @@
 
     // More background petals
     setInterval(() => createPetal(false), 200);
-    // Some foreground petals to float over the flag
+    // Some foreground petals
     setInterval(() => createPetal(true), 600);
+
+    function openEnvelope() {
+      const flap = document.querySelector('.flap');
+      const letter = document.querySelector('.letter');
+      flap.style.transform = 'rotateX(-180deg)';
+      letter.style.opacity = 1;
+    }
   </script>
 </body>
 </html>
