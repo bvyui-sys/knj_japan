@@ -14,15 +14,91 @@
     min-height: 100vh;
   }
 
+  /* Name form */
+  .name-form-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 240, 245, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    transition: opacity 0.5s ease;
+  }
+
+  .name-form {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+  }
+
+  .name-form h2 {
+    color: #bc002d;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+  }
+
+  .name-input {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1rem;
+    border: 2px solid #ffd6e0;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: 'Georgia', serif;
+    transition: border-color 0.3s ease;
+  }
+
+  .name-input:focus {
+    outline: none;
+    border-color: #bc002d;
+  }
+
+  .submit-btn {
+    background: #bc002d;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Georgia', serif;
+    transition: background 0.3s ease;
+  }
+
+  .submit-btn:hover {
+    background: #a50021;
+  }
+
+  .error-message {
+    color: #d32f2f;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    display: none;
+  }
+
+  .hidden {
+    display: none;
+  }
+
   /* Envelope container */
   .envelope-container {
     position: relative;
-    width: 300px; /* Smaller envelope */
+    width: 300px;
     max-width: 80%;
     margin: 100px auto;
     cursor: pointer;
     perspective: 1000px;
     z-index: 10;
+    display: none;
   }
 
   /* Envelope */
@@ -54,6 +130,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+  }
+
+  /* "For Kenji" text on envelope */
+  .recipient-text {
+    font-size: 1.4rem;
+    color: #bc002d;
+    margin-bottom: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
   }
 
   /* Japan flag on flap */
@@ -83,7 +170,7 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    width: 600px; /* Much wider */
+    width: 600px;
     max-width: 90%;
     max-height: 80vh;
     background: #fffdf7;
@@ -105,6 +192,15 @@
     pointer-events: auto;
   }
 
+  .letter-content {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+
+  .letter-content.show {
+    opacity: 1;
+  }
+
   .letter h1 {
     text-align: center;
     font-size: 2.5rem;
@@ -114,12 +210,51 @@
     letter-spacing: 2px;
   }
 
+  .letter h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #bc002d;
+    margin-bottom: 30px;
+    font-style: italic;
+    font-weight: normal;
+  }
+
   .letter p {
     line-height: 1.8;
     margin: 16px 0;
     font-size: 1.15rem;
     color: #444;
     text-align: justify;
+    min-height: 1.8em; /* Ensure space for typing animation */
+  }
+
+  .typing-container {
+    position: relative;
+    min-height: 1.8em;
+  }
+
+  .typing-text {
+    opacity: 0;
+  }
+
+  .typing-text.show {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  .typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background: #bc002d;
+    margin-left: 2px;
+    animation: blink 1s infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
   }
 
   /* Close button for letter */
@@ -179,9 +314,19 @@
 </head>
 <body>
 
-<div class="envelope-container" onclick="openEnvelope()">
+<div class="name-form-container" id="nameForm">
+  <div class="name-form">
+    <h2>State Your Name</h2>
+    <input type="text" class="name-input" id="nameInput" placeholder="Enter your name..." autocomplete="off">
+    <button class="submit-btn" onclick="checkName()">Continue</button>
+    <div class="error-message" id="errorMessage">This letter is not for you.</div>
+  </div>
+</div>
+
+<div class="envelope-container" id="envelopeContainer" onclick="openEnvelope()">
   <div class="envelope" id="envelope">
     <div class="flap" id="flap">
+      <div class="recipient-text">For Kenji</div>
       <div class="flag">
         <div class="circle"></div>
       </div>
@@ -191,54 +336,146 @@
 
 <div class="letter" id="letter">
   <button class="close-btn" onclick="closeLetter()">×</button>
-  <h1>My Gold Rush</h1>
+  <div class="letter-content" id="letterContent">
+    <h1>My Gold Rush</h1>
+    <h2>Hello Kenji from Japan. This is for you.</h2>
+    
+    <p>
+      <div class="typing-container" id="sentence1"></div>
+      <div class="typing-container" id="sentence2"></div>
+      <div class="typing-container" id="sentence3"></div>
+      <div class="typing-container" id="sentence4"></div>
+    </p>
 
-  <p>You're golden and unreachable,
-    everyone wants you — I can't blame them.
-    A gold rush, the kind that steals the air,
-    yet I'm left wishing I could hold it.</p>
+    <p>
+      <div class="typing-container" id="sentence5"></div>
+      <div class="typing-container" id="sentence6"></div>
+      <div class="typing-container" id="sentence7"></div>
+      <div class="typing-container" id="sentence8"></div>
+      <div class="typing-container" id="sentence9"></div>
+      <div class="typing-container" id="sentence10"></div>
+    </p>
 
-  <p>I like how open you are,  
-  how you cling without apology,  
-  how sweetness lives in your smallest gestures.  
-  I like how you never give up,  
-  how your mind is always building forward.  
-  You carry qualities I've always wished for in myself.</p>
+    <p>
+      <div class="typing-container" id="sentence11"></div>
+      <div class="typing-container" id="sentence12"></div>
+      <div class="typing-container" id="sentence13"></div>
+      <div class="typing-container" id="sentence14"></div>
+      <div class="typing-container" id="sentence15"></div>
+      <div class="typing-container" id="sentence16"></div>
+      <div class="typing-container" id="sentence17"></div>
+      <div class="typing-container" id="sentence18"></div>
+      <div class="typing-container" id="sentence19"></div>
+      <div class="typing-container" id="sentence20"></div>
+    </p>
 
-  <p>But what pulls me most  
-  isn't only your glow—  
-  it's the shadows you don't hide.  
-  The flaws that match mine,  
-  the dark corners we both carry.  
-  I think of you the way I think of stars—  
-  distant, unreachable, yet always in my sky.
-  Even with oceans keeping us apart,
-  your presence still reaches me.
-  And in that glow, I see all of you—  
-  the light, the shadows, the scars—  
-  and I love it all, because even in darkness,  
-  you're still a masterpiece I can't unsee.</p>
+    <p>
+      <div class="typing-container" id="sentence21"></div>
+      <div class="typing-container" id="sentence22"></div>
+      <div class="typing-container" id="sentence23"></div>
+      <div class="typing-container" id="sentence24"></div>
+      <div class="typing-container" id="sentence25"></div>
+    </p>
 
-  <p>Thank you for crossing paths with me.
-  Even if our time was brief, you've been living rent-free in my mind.
-  I still remember your comfort, your laugh, the way your mind works—so beautifully.
-  It's crazy how a stranger can leave a mark this deep.
-  And somehow, even in a spark, you make me hope for what's to come.</p>
-
-  <p>ps. please don't feel bad for ghosting me. you probably don't even know me but that's fine. 
-  i only followed you here on IG to wait for the chance to greet you a happy birthday. 
-  i assumed it's today, but I'm not even sure.
-  this will be the last time I reach out.
-  you're a gold rush, you know? in the Taylor Swift–coded sense.
-  and I've realized I don't like that falling feels like flying 'til the bone crush.
-  maybe someday, if you come to the Philippines, you'll find the right one—naturally, without even searching.
-  I hope you find the love you truly deserve.
-  and I hope that, in time, I can grow into the same courage and beauty I see in you.</p>
+    <p>
+      <div class="typing-container" id="sentence26"></div>
+      <div class="typing-container" id="sentence27"></div>
+      <div class="typing-container" id="sentence28"></div>
+      <div class="typing-container" id="sentence29"></div>
+      <div class="typing-container" id="sentence30"></div>
+      <div class="typing-container" id="sentence31"></div>
+      <div class="typing-container" id="sentence32"></div>
+      <div class="typing-container" id="sentence33"></div>
+      <div class="typing-container" id="sentence34"></div>
+      <div class="typing-container" id="sentence35"></div>
+    </p>
+  </div>
 </div>
 
 <div class="overlay" id="overlay"></div>
 
 <script>
+  // Define all sentences for typing animation
+  const sentences = [
+    // Paragraph 1
+    "You're golden and unreachable,",
+    "everyone wants you — I can't blame them.",
+    "A gold rush, the kind that steals the air,",
+    "yet I'm left wishing I could hold it.",
+    
+    // Paragraph 2
+    "I like how open you are,",  
+    "how you cling without apology,",  
+    "how sweetness lives in your smallest gestures.",  
+    "I like how you never give up,",  
+    "how your mind is always building forward.",  
+    "You carry qualities I've always wished for in myself.",
+    
+    // Paragraph 3
+    "But what pulls me most",  
+    "isn't only your glow—",  
+    "it's the shadows you don't hide.",  
+    "The flaws that match mine,",  
+    "the dark corners we both carry.",  
+    "I think of you the way I think of stars—",  
+    "distant, unreachable, yet always in my sky.",
+    "Even with oceans keeping us apart,",
+    "your presence still reaches me.",
+    "And in that glow, I see all of you—",  
+    "the light, the shadows, the scars—",  
+    "and I love it all, because even in darkness,",  
+    "you're still a masterpiece I can't unsee.",
+    
+    // Paragraph 4
+    "Thank you for crossing paths with me.",
+    "Even if our time was brief, you've been living rent-free in my mind.",
+    "I still remember your comfort, your laugh, the way your mind works—so beautifully.",
+    "It's crazy how a stranger can leave a mark this deep.",
+    "And somehow, even in a spark, you make me hope for what's to come.",
+    
+    // Paragraph 5 (PS section)
+    "ps. please don't feel bad for ghosting me.",
+    "you probably don't even know me but that's fine.", 
+    "i only followed you here on IG to wait for the chance to greet you a happy birthday.", 
+    "i assumed it's today, but I'm not even sure.",
+    "this will be the last time I reach out.",
+    "you're a gold rush, you know? in the Taylor Swift–coded sense.",
+    "and I've realized I don't like that falling feels like flying 'til the bone crush.",
+    "maybe someday, if you come to the Philippines, you'll find the right one—naturally, without even searching.",
+    "I hope you find the love you truly deserve.",
+    "and I hope that, in time, I can grow into the same courage and beauty I see in you."
+  ];
+
+  function checkName() {
+    const nameInput = document.getElementById('nameInput');
+    const nameForm = document.getElementById('nameForm');
+    const envelopeContainer = document.getElementById('envelopeContainer');
+    const errorMessage = document.getElementById('errorMessage');
+    
+    const inputName = nameInput.value.trim();
+    
+    if (inputName.toLowerCase() === 'kenji') {
+      // Hide the form and show the envelope
+      nameForm.style.opacity = '0';
+      setTimeout(() => {
+        nameForm.style.display = 'none';
+        envelopeContainer.style.display = 'block';
+      }, 500);
+    } else {
+      // Show error message
+      errorMessage.style.display = 'block';
+      nameInput.value = '';
+      nameInput.focus();
+    }
+  }
+
+  // Allow pressing Enter key to submit
+  document.getElementById('nameInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      checkName();
+    }
+  });
+
   function createPetal(foreground=false) {
     const petal = document.createElement("div");
     petal.classList.add("petal");
@@ -249,7 +486,7 @@
     petal.style.width = size + "px";
     petal.style.height = size * 0.7 + "px";
     petal.style.left = Math.random() * window.innerWidth + "px";
-    petal.style.animationDuration = (Math.random() * 8 + 8) + "s"; // Slower falling
+    petal.style.animationDuration = (Math.random() * 8 + 8) + "s";
     petal.style.opacity = Math.random() * 0.3 + (foreground ? 0.4 : 0.2);
 
     setTimeout(() => {
@@ -257,53 +494,32 @@
     }, 15000);
   }
 
-  // Reduced petal frequency - much fewer petals
-  setInterval(() => createPetal(false), 800); // Reduced from 200ms
-  setInterval(() => createPetal(true), 2000); // Reduced from 600ms
+  // Reduced petal frequency
+  setInterval(() => createPetal(false), 800);
+  setInterval(() => createPetal(true), 2000);
 
-  function openEnvelope() {
-    const flap = document.getElementById('flap');
-    const letter = document.getElementById('letter');
-    const envelope = document.getElementById('envelope');
-    const overlay = document.getElementById('overlay');
-
-    // Animate flap rotation
-    flap.style.transform = 'rotateX(-180deg)';
-
-    // Show overlay
-    overlay.classList.add('show');
-
-    // Show letter after a short delay
-    setTimeout(() => {
-      letter.classList.add('show');
+  function typeSentence(sentence, element, speed = 30) {
+    return new Promise((resolve) => {
+      const textElement = document.createElement('span');
+      textElement.className = 'typing-text';
+      element.appendChild(textElement);
       
-      // Hide envelope
-      envelope.style.height = '0';
-      envelope.style.opacity = '0';
-    }, 800);
+      let i = 0;
+      const timer = setInterval(() => {
+        if (i < sentence.length) {
+          textElement.textContent += sentence.charAt(i);
+          i++;
+        } else {
+          clearInterval(timer);
+          resolve();
+        }
+      }, speed);
+    });
   }
 
-  function closeLetter() {
-    const letter = document.getElementById('letter');
-    const overlay = document.getElementById('overlay');
-    const envelope = document.getElementById('envelope');
-    const flap = document.getElementById('flap');
-
-    // Close letter and overlay
-    letter.classList.remove('show');
-    overlay.classList.remove('show');
-
-    // Reset envelope and flap
-    setTimeout(() => {
-      envelope.style.height = '200px';
-      envelope.style.opacity = '1';
-      flap.style.transform = 'rotateX(0deg)';
-    }, 500);
-  }
-
-  // Close letter when clicking outside
-  document.getElementById('overlay').addEventListener('click', closeLetter);
-</script>
-</body>
-</html>
-
+  async function revealSentences() {
+    const letterContent = document.getElementById('letterContent');
+    
+   
+    letterContent.classList.add('show');
+    
